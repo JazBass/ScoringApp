@@ -13,5 +13,6 @@ data class GameEntity(
 data class PlayerEntity(
     @PrimaryKey(autoGenerate = true) var id: Long,
     var name: String,
+    var score: Long,
     var gameId: Long
-)//aa
+)

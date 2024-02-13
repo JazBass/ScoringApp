@@ -15,7 +15,7 @@ fun MainScreen(navController: NavHostController) {
     Scaffold { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
             Button(onClick = { navController.navigate("gameScreen/4") }) {
-                Text(text = "Navigate")
+                Text(text = "Start Game")
             }
         }
     }
