@@ -3,6 +3,7 @@ package com.example.scoring.data.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
@@ -10,28 +11,28 @@ import androidx.room.Update
 interface GameDao {
 
     @Query("SELECT * FROM GameEntity")
-    fun gelAllGames(): MutableList<GameEntity>
+    suspend fun gelAllGames(): MutableList<GameEntity>
 
-    @Insert
-    fun addGame(gameEntity: GameEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addGame(gameEntity: GameEntity)
 
     @Update
-    fun updateGame(gameEntity: GameEntity)
+    suspend  fun updateGame(gameEntity: GameEntity)
 
     @Delete
-    fun deleteGame(gameEntity: GameEntity)
+    suspend  fun deleteGame(gameEntity: GameEntity)
 
 
     @Query("SELECT * FROM PlayerEntity")
-    fun gelAllPlayers(): MutableList<GameEntity>
+    suspend  fun gelAllPlayers(): MutableList<PlayerEntity>
 
-    @Insert
-    fun addPlayer(gameEntity: GameEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addPlayer(gameEntity: PlayerEntity)
 
     @Update
-    fun updatePlayer(gameEntity: GameEntity)
+    suspend  fun updatePlayer(gameEntity: PlayerEntity)
 
     @Delete
-    fun deletePlayer(gameEntity: GameEntity)
+    suspend  fun deletePlayer(gameEntity: PlayerEntity)
 
 }
