@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GameRepository @Inject constructor(private val gameDao: GameDao): IGameRepository {
     override  fun addGame() {
-        gameDao.addGame(GameEntity(1L, "Javier" ))
+        gameDao.upsertGame(GameEntity(1,"s"))
     }
 
     override  fun updateGame() {

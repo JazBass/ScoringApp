@@ -1,7 +1,7 @@
 package com.example.scoring.domain
 
 interface IGameRepository {
-     fun addGame()
+      fun addGame()
 
      fun updateGame()
 

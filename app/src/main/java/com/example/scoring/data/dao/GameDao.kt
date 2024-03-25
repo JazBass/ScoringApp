@@ -6,15 +6,17 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GameDao {
 
     @Query("SELECT * FROM GameEntity")
-    suspend fun gelAllGames(): MutableList<GameEntity>
+    fun gelAllGames(): Flow<List<GameEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addGame(gameEntity: GameEntity)
+    @Upsert
+     fun upsertGame(gameEntity: GameEntity)
 
     @Update
     suspend  fun updateGame(gameEntity: GameEntity)
