@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Scoring"
 include(":app")
+include(":domain")
+include(":data")
+include(":presentation")
