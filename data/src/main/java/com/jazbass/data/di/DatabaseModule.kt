@@ -3,8 +3,6 @@ package com.jazbass.data.di
 import android.content.Context
 import androidx.room.Room
 import com.jazbass.data.dao.GameDatabase
-import com.jazbass.data.implementation.GameDataRepository
-import com.jazbass.domain.IGameRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
