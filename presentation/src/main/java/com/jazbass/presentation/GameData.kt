@@ -1,4 +1,4 @@
-package com.jazbass.presentation.view
+package com.jazbass.presentation
 
 class GameData(
     id: Long,

@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Scoring"
         tools:targetApi="31">
         <activity
-            android:name=".ui.view.MainActivity"
+            android:name="com.jazbass.presentation.view.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Scoring">

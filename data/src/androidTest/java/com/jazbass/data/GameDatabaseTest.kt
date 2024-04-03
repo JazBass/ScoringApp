@@ -1,10 +1,8 @@
-package com.jazbass.scoring
+package com.jazbass.data
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.jazbass.data.dao.GameDatabase
-import com.jazbass.data.dao.GameEntity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 
