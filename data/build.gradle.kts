@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-//    id("com.google.dagger.hilt.android")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -35,9 +35,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":app"))
-    implementation(project(":domain"))
 
+    api(project(":domain"))
     //Room
     val room_version = "2.6.1"
 
@@ -45,8 +44,15 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
 
-    //Hilt
-//    implementation("com.google.dagger:hilt-android:2.49")
-//    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-//    ksp("com.google.dagger:hilt-android-compiler:2.48")
+//    Hilt
+    implementation("com.google.dagger:hilt-android:2.49")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    ksp("com.google.dagger:hilt-android-compiler:2.48")
+
+
+    //Test
+    androidTestImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1-Beta")
 }

@@ -58,12 +58,16 @@ android {
 
 dependencies {
 
+    api(project(":presentation"))
+    implementation(project(":data"))
+    api(project(":domain"))
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     //Hilt
-    implementation("com.google.dagger:hilt-android:2.49")
+    implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     ksp("com.google.dagger:hilt-android-compiler:2.48")
 
