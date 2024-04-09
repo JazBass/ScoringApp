@@ -1,6 +1,6 @@
-package com.jazbass.presentation
+package com.jazbass.domain
 
-class GameData(
+class GameBusiness(
     id: Long,
     name: String
 )

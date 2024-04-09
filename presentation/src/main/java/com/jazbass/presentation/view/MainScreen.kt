@@ -21,14 +21,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.jazbass.presentation.components.Counter
 import com.jazbass.presentation.viewModel.GameViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.jazbass.presentation.GameData
+import com.jazbass.domain.GameBusiness
 
 @Composable
 fun MainScreen(
@@ -70,7 +69,7 @@ fun MainScreen(
                     //viewModel.show dialog mutrableState
                    // ShowPopUp("Please select a Game Name")
                 }
-                GameData(id = 0, name = gameName).also {
+                GameBusiness(id = 0, name = gameName).also {
                     viewModel.addGame(it)
                 }
                 navController.navigate("gameScreen/4")
@@ -102,11 +101,6 @@ fun ShowPopUp(msge: String) {
     }
 }
 
-@Preview
-@Composable
-fun MainScreenPreview(){
-
-}
 
 
 

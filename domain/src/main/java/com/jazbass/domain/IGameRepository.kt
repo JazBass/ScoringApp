@@ -1,13 +1,15 @@
 package com.jazbass.domain
 
-import androidx.lifecycle.LiveData
-import com.jazbass.data.dao.GameEntity
+import kotlinx.coroutines.flow.Flow
 
- public interface IGameRepository {
-      fun addGame(gameName: GameEntity)
 
-     fun updateGame()
+ interface IGameRepository {
+   suspend fun addGame(gameName: GameBusiness)
 
-     fun getGameById(id: Long) : LiveData<GameEntity>
+    suspend fun updateGame()
+
+     fun getGameById(id: Long): Flow<GameBusiness>
+
+     fun getGamePlayers(gameId: Long): Flow<List<PlayerData>>
 
 }

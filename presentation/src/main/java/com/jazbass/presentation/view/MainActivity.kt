@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.jazbass.presentation.GameData
 import com.jazbass.presentation.GameUIState
 import com.jazbass.presentation.navigation.AppNavigation
 import com.jazbass.presentation.theme.ScoringTheme
@@ -33,21 +32,21 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
 
-                viewModel.uiState.collect{ uiState ->
-                    when (uiState){
-                        GameUIState.Loading -> TODO()
-                        is GameUIState.Success -> TODO()
-                        is GameUIState.Error -> TODO()
-                    }
-                }
+//                viewModel.uiState.collect{ uiState ->
+//                    when (uiState){
+//                        is GameUIState.Loading -> TODO()
+//                        is GameUIState.Success -> TODO()
+//                        is GameUIState.Error -> TODO()
+//                    }
+//                }
 
-                viewModel.result.collect{result ->
-                    when(result){
-                        is Long -> TODO()
-                        is GameData -> TODO()
-                        else -> TODO()
-                    }
-                }
+//                viewModel.result.collect{result ->
+//                    when(result){
+//                        is Long -> TODO()
+//                        is GameData -> TODO()
+//                        else -> TODO()
+//                    }
+//                }
             }
         }
     }

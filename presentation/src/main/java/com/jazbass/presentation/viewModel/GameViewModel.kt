@@ -1,16 +1,19 @@
 package com.jazbass.presentation.viewModel
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jazbass.domain.GameBusiness
 import com.jazbass.domain.IGameRepository
-import com.jazbass.presentation.GameData
 import com.jazbass.presentation.GameUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,21 +33,24 @@ class GameViewModel @Inject constructor(
         gameSelected.value = id
     }
 
-    fun getGameSelected(): LiveData<GameData> = gameRepository.getGameById(gameSelected.value!!)
+    fun getGameSelected(): Flow<GameBusiness> = gameRepository.getGameById(gameSelected.value!!)
 
-    fun addGame(
-        gameName: GameData
-    ) {
-        gameRepository.addGame(gameName)
+    fun addGame(gameData: GameBusiness) {
+        executeAction(gameData) { gameRepository.addGame(gameData) }
     }
 
-    fun updateGame() {
-        gameRepository.updateGame()
+    fun updateGame(gameData: GameBusiness) {
+        executeAction(gameData) { gameRepository.updateGame() }
     }
 
-    private fun executeAction(){
-        viewModelScope.launch {
-
+    private fun executeAction(gameData: GameBusiness, block: suspend () -> Unit): Job {
+        return viewModelScope.launch {
+            try {
+                block()
+                _result.value = gameData
+            }catch (e: Exception){
+                Log.i("Error", e.message!!)
+            }
         }
     }
 }

@@ -2,7 +2,10 @@ package com.jazbass.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.jazbass.data.dao.GameDao
 import com.jazbass.data.dao.GameDatabase
+import com.jazbass.data.repository.GameRepositoryImpl
+import com.jazbass.domain.IGameRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object AppModule {
 
     const val GAME_DATABASE_NAME = "gameDatabase "
 
@@ -28,5 +31,11 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideGameDao(db: GameDatabase) = db.gameDao()
+
+    @Singleton
+    @Provides
+    fun providesGameRepository(gameDao: GameDao) : IGameRepository {
+        return GameRepositoryImpl(gameDao)
+    }
 
 }
