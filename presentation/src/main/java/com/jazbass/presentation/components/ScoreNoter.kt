@@ -1,6 +1,8 @@
 package com.jazbass.presentation.components
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,24 +22,26 @@ import com.jazbass.presentation.theme.ScoringTheme
 @Composable
 fun ScoreNote(
     player: PlayerBusiness
-){
-    Row (
+) {
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
-            .clip(RoundedCornerShape(6.dp)),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = player.name)// First letter to uppercase ?
-        Button(onClick = { player.increaseScore() }) {
-            Text(text = "-")
-        }
-        Text(
-            text = player.actualScore.value.toString(),
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
-        Button(onClick = { player.decreaseScore() }) {
-            Text(text = "+")
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Button(onClick = { player.decreaseScore() }) {
+                Text(text = "-")
+            }
+            Text(
+                text = player.actualScore.value.toString(),
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+            Button(onClick = { player.increaseScore() }) {
+                Text(text = "+")
+            }
         }
     }
 }
@@ -45,10 +49,10 @@ fun ScoreNote(
 @SuppressLint("UnrememberedMutableState")
 @Preview
 @Composable
-fun ScoreNotePreview(){
+fun ScoreNotePreview() {
     ScoringTheme {
         Surface {
-            ScoreNote(PlayerBusiness(0,"Javier", 0, 0))
+            ScoreNote(PlayerBusiness(0, "Javier", 0, 0))
         }
     }
 }

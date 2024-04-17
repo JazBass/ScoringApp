@@ -1,5 +1,7 @@
 package com.jazbass.presentation.view
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +22,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -42,7 +45,10 @@ fun MainScreen(
     val playersNames = remember { mutableListOf<String>() }
 
     Scaffold { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
+        Column(
+            modifier = Modifier.padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             OutlinedTextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -51,18 +57,34 @@ fun MainScreen(
                 onValueChange = { gameName = it },
                 label = { Text(text = "Game") }
             )
-            Row {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text(text = "Players amount")
-                Button(onClick = { if (playersCount > 1) playersCount-- }) {
-                    Text(text = "-")
-                }
-                Text(text = playersCount.toString())
-                Button(onClick = { playersCount++ }) {
-                    Text(text = "+")
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Button(onClick = { if (playersCount > 1) playersCount-- }) {
+                        Text(text = "-")
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        text = playersCount.toString()
+                    )
+                    Button(onClick = { playersCount++ }) {
+                        Text(text = "+")
+                    }
                 }
             }
             repeat(playersCount) { i ->
-                if (playersNames.size < playersCount) playersNames.add(i, "")
+                val label = "Player ${i + 1}"
+                if (playersNames.size < playersCount) {
+                    playersNames.add(i, label)
+                } else if (playersNames.size > playersCount) {
+                    playersNames.removeLast()
+                }
                 var playerName by remember { mutableStateOf("") }
                 OutlinedTextField(
                     modifier = Modifier
@@ -71,9 +93,12 @@ fun MainScreen(
                     value = playerName,
                     onValueChange = { newValue ->
                         playerName = newValue
-                        playersNames.set(i, newValue)
+                        playersNames[i] = newValue
+                        if (newValue.isNullOrBlank()) {
+                            playersNames[i] = label
+                        }
                     },
-                    label = { Text(text = "Player ${i + 1}") }
+                    label = { Text(text = label) }
                 )
 
             }
@@ -87,11 +112,6 @@ fun MainScreen(
                             }
                         )
                     }
-//                    playersNames.value.map { playerName ->
-//                        PlayerBusiness(0L, playerName, 0, 0)
-//                    }.also {
-//                        viewModel.addPlayers(it)
-//                    }
                     navController.navigate("gameScreen")
                 }) {
                 Text(text = "Start Game")
