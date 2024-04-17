@@ -14,6 +14,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +29,7 @@ import com.jazbass.presentation.components.Counter
 import com.jazbass.presentation.viewModel.GameViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jazbass.domain.GameBusiness
+import com.jazbass.domain.PlayerBusiness
 
 @Composable
 fun MainScreen(
@@ -35,9 +37,9 @@ fun MainScreen(
     viewModel: GameViewModel = viewModel()
 ) {
 
-    val playersCount = remember { mutableIntStateOf(1) }
+    var playersCount by remember { mutableStateOf(2) }
     var gameName by remember { mutableStateOf("") }
-    var playersNames by remember { mutableStateOf("") }
+    val playersNames = remember { mutableListOf<String>() }
 
     Scaffold { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
@@ -51,29 +53,47 @@ fun MainScreen(
             )
             Row {
                 Text(text = "Players amount")
-                Counter(score = playersCount)
+                Button(onClick = { if (playersCount > 1) playersCount-- }) {
+                    Text(text = "-")
+                }
+                Text(text = playersCount.toString())
+                Button(onClick = { playersCount++ }) {
+                    Text(text = "+")
+                }
             }
-            for (i in 1..playersCount.intValue) {
+            repeat(playersCount) { i ->
+                if (playersNames.size < playersCount) playersNames.add(i, "")
+                var playerName by remember { mutableStateOf("") }
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
-                    value = playersNames,
-                    onValueChange = { playersNames = it },
-                    label = { Text(text = "Player $i") }
+                    value = playerName,
+                    onValueChange = { newValue ->
+                        playerName = newValue
+                        playersNames.set(i, newValue)
+                    },
+                    label = { Text(text = "Player ${i + 1}") }
                 )
-            }
 
-            Button(onClick = {
-                if (gameName.isNullOrBlank()) {
-                    //viewModel.show dialog mutrableState
-                   // ShowPopUp("Please select a Game Name")
-                }
-                GameBusiness(id = 0, name = gameName).also {
-                    viewModel.addGame(it)
-                }
-                navController.navigate("gameScreen/4")
-            }) {
+            }
+            Button(
+                onClick = {
+                    GameBusiness(id = 0, name = gameName).also {
+                        viewModel.addGame(
+                            game = it,
+                            players = playersNames.map { playerName ->
+                                PlayerBusiness(0, playerName, 0, 0)
+                            }
+                        )
+                    }
+//                    playersNames.value.map { playerName ->
+//                        PlayerBusiness(0L, playerName, 0, 0)
+//                    }.also {
+//                        viewModel.addPlayers(it)
+//                    }
+                    navController.navigate("gameScreen")
+                }) {
                 Text(text = "Start Game")
             }
         }

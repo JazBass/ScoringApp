@@ -44,13 +44,13 @@ dependencies {
 
     api(project(":domain"))
 
-    val composeBom = platform("androidx.compose:compose-bom:2024.03.00")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-    implementation("androidx.compose.material3:material3")
+
+    implementation(platform("androidx.compose:compose-bom:2024.03.00"))
+//    androidTestImplementation(composeBom)
+    implementation("androidx.compose.material3:material3:1.1.2")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
-
+    implementation("androidx.compose.runtime:runtime-livedata")
 
 
     //Hilt

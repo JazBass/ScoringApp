@@ -14,20 +14,17 @@ import com.jazbass.presentation.viewModel.GameViewModel
 @Composable
 fun AppNavigation(){
     val navController = rememberNavController()
+    val viewModel = hiltViewModel<GameViewModel>()
     NavHost(navController = navController, startDestination = AppScreens.MainScreen.route){
 
         composable(route = AppScreens.MainScreen.route){
-            val viewModel = hiltViewModel<GameViewModel>()
             MainScreen(navController, viewModel)
         }
 
         composable(
-            route = AppScreens.GameScreen.route,
-            arguments = listOf(navArgument("gameId"){type = NavType.IntType})
-        ){backStackEntry ->
-            val gameId = backStackEntry.arguments?.getInt("gameId")
-            requireNotNull(gameId) { "Id can not be null" }
-            GameScreen(gameId, navController)
+            route = AppScreens.GameScreen.route
+        ){
+            GameScreen(navController, viewModel)
         }
     }
 }

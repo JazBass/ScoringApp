@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.jazbass.data.dao.GameDao
 import com.jazbass.data.dao.GameDatabase
 import com.jazbass.data.repository.GameRepositoryImpl
-import com.jazbass.domain.IGameRepository
+import com.jazbass.domain.IGameInteractor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,7 +34,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesGameRepository(gameDao: GameDao) : IGameRepository {
+    fun providesGameRepository(gameDao: GameDao) : IGameInteractor {
         return GameRepositoryImpl(gameDao)
     }
 

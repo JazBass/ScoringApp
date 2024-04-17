@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.jazbass.presentation.GameUIState
 import com.jazbass.presentation.navigation.AppNavigation
 import com.jazbass.presentation.theme.ScoringTheme
 import com.jazbass.presentation.viewModel.GameViewModel
