@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
+import kotlin.Exception
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
@@ -45,12 +45,20 @@ class GameViewModel @Inject constructor(
                     )
                 }
             }catch (e: Exception){
-                Log.i("Error", e.message!!)
+                Log.i("Error", e.toString())
             }
         }
     }
 
-
+    fun updatePlayer(player: PlayerBusiness){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                gameRepository.updatePlayer(player)
+            }catch (e: Exception){
+                Log.i("Error", e.toString())
+            }
+        }
+    }
 
     fun addPlayers(players: List<PlayerBusiness>) {
         viewModelScope.launch {

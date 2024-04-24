@@ -13,21 +13,15 @@ import javax.inject.Inject
 
 class GameRepositoryImpl @Inject constructor(private val gameDao: GameDao) : IGameInteractor {
 
-    val result: Flow<Any> = flow {
-
-    }
-
     override suspend fun addGame(gameName: GameBusiness): Long {
-        return gameDao.upsertGame(gameName.toData())
+        return gameDao.insertGame(gameName.toData())
     }
-
 
     override fun getGameById(id: Long): Flow<GameBusiness> {
         return gameDao.getGameById(id).map {
             it.toDomain()
         }
     }
-
 
     override fun getGamePlayers(gameId: Long): Flow<List<PlayerBusiness>> {
         return gameDao.getGamePlayers(gameId).map { playerList ->
@@ -47,6 +41,14 @@ class GameRepositoryImpl @Inject constructor(private val gameDao: GameDao) : IGa
             gameDao.addPlayer(player.toData())
         }
     }
+
+    override suspend fun updatePlayer(player: PlayerBusiness) {
+        gameDao.updatePlayer(player.toData())
+    }
+
+
+    /** ~~~~~~~~~~~ UTILS ~~~~~~~~~~~ **/
+
 
     private fun PlayerBusiness.toData(): PlayerEntity {
         return PlayerEntity(

@@ -19,11 +19,8 @@ interface GameDao {
     @Query("SELECT * FROM GameEntity WHERE id = :id")
     fun getGameById(id: Long) :Flow<GameEntity>
 
-    @Query("SELECT * FROM PlayerEntity WHERE id= :id")
-    fun getGamePlayers(id: Long): Flow<List<PlayerEntity>>
-
-    @Upsert
-     fun upsertGame(gameEntity: GameEntity) : Long
+    @Insert
+     fun insertGame(gameEntity: GameEntity) : Long
 
     @Update
     suspend fun updateGame(gameEntity: GameEntity)
@@ -31,13 +28,18 @@ interface GameDao {
     @Delete
     suspend fun deleteGame(gameEntity: GameEntity)
 
+    /** ~~~~~~~~~~ PLAYERS ~~~~~~~~~~ **/
+
+    @Query("SELECT * FROM PlayerEntity WHERE id= :id")
+    fun getGamePlayers(id: Long): Flow<List<PlayerEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addPlayer(gameEntity: PlayerEntity)
+    suspend fun addPlayer(playerEntity: PlayerEntity)
 
     @Update
-    suspend fun updatePlayer(gameEntity: PlayerEntity)
+    suspend fun updatePlayer(playerEntity: PlayerEntity)
 
     @Delete
-    suspend fun deletePlayer(gameEntity: PlayerEntity)
+    suspend fun deletePlayer(playerEntity: PlayerEntity)
 
 }

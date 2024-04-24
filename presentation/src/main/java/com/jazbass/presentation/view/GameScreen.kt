@@ -20,11 +20,7 @@ fun GameScreen(
 ) {
     val actualGame = gameViewModel.gameSelected.collectAsState()
     val players = gameViewModel.actualPlayers.collectAsState()
-    
-    LaunchedEffect(key1 = true) {
 
-    }
-    
     Text(text = actualGame.value.name)
     Column(modifier = Modifier.fillMaxWidth()) {
         players.value.let {
@@ -33,4 +29,5 @@ fun GameScreen(
             }
         }
     }
+
 }

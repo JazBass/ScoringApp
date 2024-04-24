@@ -44,7 +44,14 @@ fun MainScreen(
     var gameName by remember { mutableStateOf("") }
     val playersNames = remember { mutableListOf<String>() }
 
-    Scaffold { paddingValues ->
+    Scaffold (
+        topBar = {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "New Game"
+            )
+        }
+    ){ paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally
