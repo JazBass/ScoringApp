@@ -30,8 +30,8 @@ interface GameDao {
 
     /** ~~~~~~~~~~ PLAYERS ~~~~~~~~~~ **/
 
-    @Query("SELECT * FROM PlayerEntity WHERE id= :id")
-    fun getGamePlayers(id: Long): Flow<List<PlayerEntity>>
+    @Query("SELECT * FROM PlayerEntity WHERE gameId= :gameId")
+    fun getGamePlayers(gameId: Long): Flow<List<PlayerEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addPlayer(playerEntity: PlayerEntity)

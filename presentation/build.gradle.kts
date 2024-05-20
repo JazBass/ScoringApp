@@ -44,6 +44,8 @@ dependencies {
 
     api(project(":domain"))
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
 
     implementation(platform("androidx.compose:compose-bom:2024.03.00"))
 //    androidTestImplementation(composeBom)

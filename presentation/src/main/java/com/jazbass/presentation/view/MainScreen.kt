@@ -1,7 +1,6 @@
 package com.jazbass.presentation.view
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +15,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,11 +26,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
-import com.jazbass.presentation.components.Counter
 import com.jazbass.presentation.viewModel.GameViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jazbass.domain.GameBusiness
 import com.jazbass.domain.PlayerBusiness
+import com.jazbass.presentation.components.TopBar
 
 @Composable
 fun MainScreen(
@@ -40,16 +38,13 @@ fun MainScreen(
     viewModel: GameViewModel = viewModel()
 ) {
 
-    var playersCount by remember { mutableStateOf(2) }
+    var playersCount by remember { mutableIntStateOf(2) }
     var gameName by remember { mutableStateOf("") }
     val playersNames = remember { mutableListOf<String>() }
 
     Scaffold (
         topBar = {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = "New Game"
-            )
+            TopBar(title = "New game")
         }
     ){ paddingValues ->
         Column(
@@ -88,7 +83,7 @@ fun MainScreen(
             repeat(playersCount) { i ->
                 val label = "Player ${i + 1}"
                 if (playersNames.size < playersCount) {
-                    playersNames.add(i, label)
+                    playersNames.add("")
                 } else if (playersNames.size > playersCount) {
                     playersNames.removeLast()
                 }
@@ -101,9 +96,6 @@ fun MainScreen(
                     onValueChange = { newValue ->
                         playerName = newValue
                         playersNames[i] = newValue
-                        if (newValue.isNullOrBlank()) {
-                            playersNames[i] = label
-                        }
                     },
                     label = { Text(text = label) }
                 )
@@ -111,10 +103,13 @@ fun MainScreen(
             }
             Button(
                 onClick = {
+                    val modifiedPlayerList: List<String> = playersNames.mapIndexed {index, name ->
+                        name.ifBlank { "Player ${index +1}" }
+                    }
                     GameBusiness(id = 0, name = gameName).also {
                         viewModel.addGame(
                             game = it,
-                            players = playersNames.map { playerName ->
+                            players = modifiedPlayerList.map { playerName ->
                                 PlayerBusiness(0, playerName, 0, 0)
                             }
                         )
